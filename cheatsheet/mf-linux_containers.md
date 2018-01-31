@@ -1,9 +1,9 @@
 # Linux Containers CheatSheat
 
 ## Table of Contents
-1. [What is Containers](#What is containers)
-2. [Containers vs Dockers](#container sv dockers)
-3. [LXC Command list](#lxc command list)
+1. [What is Containers](#Whatis-containers)
+2. [Containers vs Dockers](#containervsdockers)
+3. [LXC list Commands](#lxclistcommands)
 4. [test](#aaa)
 
 ## What is Containers
@@ -27,14 +27,109 @@ LXC combines the kernel's cgroups and support for isolated namespaces to provide
 
 ## Containters vs Dockers
 
-## LXC Commad list
+## LXC list Commands
 
 ```bash
-root at lxcos in ~$ 
+root at lxcos in ~$
 lxc-attach           lxc-clone            lxc-destroy          lxc-info             lxc-start            lxc-unfreeze
 lxc-autostart        lxc-config           lxc-device           lxc-ls               lxc-start-ephemeral  lxc-unshare
 lxc-cgroup           lxc-console          lxc-execute          lxc-monitor          lxc-stop             lxc-usernsexec
 lxc-checkconfig      lxc-create           lxc-freeze           lxc-snapshot         lxc-top              lxc-wait
-
-
 ```
+
+- some useful command to manage LXC:
+  - List Containters and summmery information
+  ```bash
+  # lxc-ls --fancy
+  ```
+  command output
+
+   ```bash
+   $ lxc-ls --fancy
+   NAME  STATE  IPV4  IPV6  AUTOSTART  
+   ----------------------------------
+  ```
+
+  - Check LXC Configuration
+
+    check the current kernel for lxc support
+
+    ```bash
+    # lxc-checkconfig
+    ```
+
+    command output
+    ```bash
+  $ lxc-checkconfig
+  Kernel configuration not found at /proc/config.gz; searching...
+  Kernel configuration found at /boot/config-3.10.0-693.11.1.el7.x86_64
+  --- Namespaces ---
+  Namespaces: enabled
+  Utsname namespace: enabled
+  Ipc namespace: enabled
+  Pid namespace: enabled
+  User namespace: enabled
+  newuidmap is not installed
+  newgidmap is not installed
+  Network namespace: enabled
+  Multiple /dev/pts instances: enabled
+  --- Control groups ---
+Cgroup: enabled
+Cgroup clone_children flag: enabled
+Cgroup device: enabled
+Cgroup sched: enabled
+Cgroup cpu account: enabled
+Cgroup memory controller: enabled
+Cgroup cpuset: enabled
+--- Misc ---
+Veth pair device: enabled
+Macvlan: enabled
+Vlan: enabled
+Bridges: enabled
+Advanced netfilter: enabled
+CONFIG_NF_NAT_IPV4: enabled
+CONFIG_NF_NAT_IPV6: enabled
+CONFIG_IP_NF_TARGET_MASQUERADE: enabled
+CONFIG_IP6_NF_TARGET_MASQUERADE: enabled
+CONFIG_NETFILTER_XT_TARGET_CHECKSUM: enabled
+--- Checkpoint/Restore ---
+checkpoint restore: enabled
+CONFIG_FHANDLE: enabled
+CONFIG_EVENTFD: enabled
+CONFIG_EPOLL: enabled
+CONFIG_UNIX_DIAG: enabled
+CONFIG_INET_DIAG: enabled
+CONFIG_PACKET_DIAG: enabled
+CONFIG_NETLINK_DIAG: enabled
+File capabilities: enabled
+Note : Before booting a new kernel, you can check its configuration
+usage : CONFIG=/path/to/config /usr/bin/lxc-checkconfig
+```
+- Creating Container
+
+  lxc-create  creates a container object where is stored the configuration information and where can be stored user information.
+  The identifier name is used to specify the container to be used with the different lxc commands.
+
+  The object is a directory created in /var/lib/lxc and identified by its name.
+
+  command with flags:
+
+  > lxc-create {-n name} [-f config_file] {-t template} [-B backingstore] [-- template-options]
+
+  command
+
+  ```bash
+  # sudo lxc-create -t download -n u1
+  or
+  # sudo lxc-create -n <container-name> -t <template>
+  ```
+
+  example
+  ```bash
+  # sudo lxc-create -t download -n u1 -- --dist ubuntu --release xenial --arch amd64
+  or
+  # sudo lxc-create -t download -n u1 -- -d ubuntu -r xenial -a amd64
+  ```
+
+
+- list containters
