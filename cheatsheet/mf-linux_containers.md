@@ -59,6 +59,7 @@ lxc-checkconfig      lxc-create           lxc-freeze           lxc-snapshot     
     ```
 
     command output
+
     ```bash
   $ lxc-checkconfig
   Kernel configuration not found at /proc/config.gz; searching...
@@ -104,7 +105,8 @@ CONFIG_NETLINK_DIAG: enabled
 File capabilities: enabled
 Note : Before booting a new kernel, you can check its configuration
 usage : CONFIG=/path/to/config /usr/bin/lxc-checkconfig
-```
+  ```
+
 - Creating Container
 
   lxc-create  creates a container object where is stored the configuration information and where can be stored user information.
@@ -116,20 +118,24 @@ usage : CONFIG=/path/to/config /usr/bin/lxc-checkconfig
 
   > lxc-create {-n name} [-f config_file] {-t template} [-B backingstore] [-- template-options]
 
-  command
+  command line
 
   ```bash
-  # sudo lxc-create -t download -n u1
+  lxc-create -t download -n u1
   or
-  # sudo lxc-create -n <container-name> -t <template>
+  lxc-create -n <container-name> -t <template>
   ```
 
   example
+
   ```bash
-  # sudo lxc-create -t download -n u1 -- --dist ubuntu --release xenial --arch amd64
+  lxc-create -t download -n u1 -- --dist ubuntu --release xenial --arch amd64
   or
-  # sudo lxc-create -t download -n u1 -- -d ubuntu -r xenial -a amd64
+  lxc-create -t download -n u1 -- -d ubuntu -r xenial -a amd64
   ```
 
-
 - list containters
+
+  ```bash
+  lxc-ls
+  ```
